@@ -25,4 +25,14 @@
             </form>
         </div>
     </body>
+    <script>
+        $(document).ready(function(){
+            var $form = $('form');
+            $form.submit(function(){
+                $.post($(this).attr('action'), $(this).serialize(), function(response){
+                },'json');
+                return false;
+            });
+        });
+    </script>
 </html>
