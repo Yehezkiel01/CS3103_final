@@ -13,25 +13,36 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- <script src="login.js"></script> -->
+        <script src="{{ url_for('static', filename='asdfsf.js') }}"></script>></script>
     </head>
     <body>
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-            <form action="/help" method="post">
-                <label for="username">User Name</label>
-                <input name="username" id="username" type="text"><br><br>
-                <label for="password" style="margin-right: 12px;">Password</label>
-                <input name="password" id="password" type="text"><br><br>
-                <input type="submit" value="Submit">
-            </form>
+            <label for="username">User Name</label>
+            <input name="username" id="username" type="text"><br><br>
+            <label for="password" style="margin-right: 12px;">Password</label>
+            <input name="password" id="password" type="text"><br>
+            <small id="errorMsg" style="color: red;"></small><br>
+            <input type="submit" value="Submit" id="submit-btn">
         </div>
     </body>
     <script>
         $(document).ready(function(){
-            var $form = $('form');
-            $form.submit(function(){
-                $.post($(this).attr('action'), $(this).serialize(), function(response){
-                },'json');
-                return false;
+            var $submitBtn = $('#submit-btn');
+            var $username = $('#username');
+            var $password = $('#password');
+
+            // Try reverse Engineering this :)
+            hashCode = function(s){
+                return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
+            }
+
+            $submitBtn.click(function(){
+                if (hashCode($username.val()) === 92668751 && hashCode($password.val()) === -438623111) {
+                    pathIs();
+                } else {
+                    $('#errorMsg').html("Username and Password is not correct!");
+                }
             });
         });
     </script>
