@@ -16,7 +16,9 @@ mysql = MySQL(app)
 # Open connection with sql to query the domain
 def query_domain(name):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM records WHERE domain='" + name + "'")
+    sql_query = "SELECT * FROM records WHERE domain='" + name + "';"
+    print("SQL Query: " + sql_query)
+    cur.execute(sql_query)
     results = cur.fetchall()
     cur.close()
 
