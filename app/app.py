@@ -26,15 +26,28 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+# Execute one line of sql statement
+# which may consists of more than one statement
+def execute_sql_statement(sql_statement):
+    statements = sql_statement.split(';')
+    results = []
+
+    cur = get_db().cursor()
+    for s in statements:
+        print("[LOG] executing statement: " + s)
+        cur.execute(s)
+        get_db().commit()
+        results += cur.fetchall()
+    cur.close()
+
+    return results
+
 # Open connection with sql to query the domain
 def query_domain(name):
-    cur = get_db().cursor()
     sql_query = "SELECT * FROM records WHERE domain='" + name + "';"
     print("[LOG] SQL Query: " + sql_query)
-    cur.execute(sql_query)
-    results = cur.fetchall()
+    results = execute_sql_statement(sql_query)
     print("[LOG] Raw Resulst: " + str(results))
-    cur.close()
 
     # Change the format
     formatted_results = []
