@@ -20,7 +20,6 @@ def dummy_sql_query(domain):
 	# return ip address from sql
 	return "127.0.0.1"
 
-
 class BasicResolver:
      def resolve(self,request,handler):
          domain_query = request.get_q().get_qname()
@@ -28,7 +27,7 @@ class BasicResolver:
          reply = request.reply()
          reply.add_answer(*RR.fromZone(f"abc.def. 60 A {ip_address}"))
          return reply
-         
+
 resolver = BasicResolver()
 logger = DNSLogger(prefix=False)
 server = DNSServer(resolver, port=PORT, address=DNS_SERVER_IP_ADDRESS, logger=logger)
