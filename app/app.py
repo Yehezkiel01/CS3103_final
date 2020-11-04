@@ -1,26 +1,53 @@
 from flask import Flask, render_template
 from flask import jsonify
 from flask import request
-from flask_mysqldb import MySQL
+from flask import current_app
+
+import sqlite3
+from flask import g
 
 app = Flask(__name__)
 
-# MY SQL Configuration
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'dns'
+def get_database_path():
+    return current_app.root_path + '/database/dns.db'
 
-mysql = MySQL(app)
+# Reference: https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
+# Get the current db or created a new connection if there is no db yet
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        print("[LOG] The database path: " + get_database_path())
+        db = g._database = sqlite3.connect(get_database_path())
+    return db
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+
+# Execute one line of sql statement
+# which may consists of more than one statement
+def execute_sql_statement(sql_statement):
+    statements = sql_statement.split(';')
+    results = []
+
+    cur = get_db().cursor()
+    for s in statements:
+        print("[LOG] executing statement: " + s)
+        cur.execute(s)
+        get_db().commit()
+        results += cur.fetchall()
+    cur.close()
+
+    return results
 
 # Open connection with sql to query the domain
 def query_domain(name):
-    cur = mysql.connection.cursor()
     sql_query = "SELECT * FROM records WHERE domain='" + name + "';"
-    print("SQL Query: " + sql_query)
-    cur.execute(sql_query)
-    results = cur.fetchall()
-    cur.close()
+    print("[LOG] SQL Query: " + sql_query)
+    results = execute_sql_statement(sql_query)
+    print("[LOG] Raw Resulst: " + str(results))
 
     # Change the format
     formatted_results = []
