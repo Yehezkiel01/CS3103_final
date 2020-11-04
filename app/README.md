@@ -15,13 +15,15 @@ Note: Only tested on linux machine, will be tested from GNS3 soon
 1. sudo apt update
 2. sudo apt install mysql-server
 3. sudo mysql_secure_installation
-4. enter root as password
-5. mysql -u root -p
-6. Enter root as password
-7. CREATE DATABASE IF NOT EXIST dns;
-8. USE dns;
-9. CREATE TABLE IF NOT EXISTS records (domain varchar(255) NOT NULL PRIMARY KEY, ip varchar(255) NOT NULL);
-10. INSERT INTO records (domain, ip) VALUES ('www.bank.com', '127.0.0.1');
+4. sudo apt-get install libmysqlclient-dev
+5. sudo apt-get install python3-dev
+6. enter root as password
+7. mysql -u root -p
+8. Enter root as password
+9. CREATE DATABASE IF NOT EXIST dns;
+10. USE dns;
+11. CREATE TABLE IF NOT EXISTS records (domain varchar(255) NOT NULL PRIMARY KEY, ip varchar(255) NOT NULL);
+12. INSERT INTO records (domain, ip) VALUES ('www.bank.com', '127.0.0.1');
 
 ## Project Structure
 
