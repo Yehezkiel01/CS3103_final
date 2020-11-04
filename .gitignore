@@ -1,0 +1,5 @@
+# Ignore default venv files
+.DS_Store
+app/bin/*
+app/lib/*
+app/pyvenv.cfg
