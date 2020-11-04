@@ -5,6 +5,7 @@ import time
 DNS_SERVER_IP_ADDRESS = "127.0.0.2"
 PORT = 53
 TEST = True
+db = None
 
 """
 
@@ -15,10 +16,56 @@ TEST = True
 
 """
 
+import sqlite3
+
+def get_database_path():
+    return './database/dns.db'
+
+# Reference: https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
+# Get the current db or created a new connection if there is no db yet
+def get_db():
+    global db
+    if db is None:
+        db = sqlite3.connect(get_database_path())
+    return db
+
+def close_connection():
+    global db
+    if db is not None:
+        db.close()
+        db = None
+
+# Execute one line of sql statement
+# which may consists of more than one statement
+def execute_sql_statement(sql_statement):
+    statements = sql_statement.split(';')
+    results = []
+
+    cur = get_db().cursor()
+    for s in statements:
+        print("[LOG] executing statement: " + s)
+        cur.execute(s)
+        get_db().commit()
+        results += cur.fetchall()
+    cur.close()
+    close_connection()
+
+    return results
+
+# Open connection with sql to query the domain
 def dummy_sql_query(domain):
-	# query sql
-	# return ip address from sql
-	return "127.0.0.1"
+    # Removing the last character, which is a dot, of the domain
+    domain_name = str(domain)[:-1]
+    sql_query = "SELECT * FROM records WHERE domain='" + domain_name + "';"
+    print("[LOG] SQL Query: " + sql_query)
+    results = execute_sql_statement(sql_query)
+    print("[LOG] Raw Resulst: " + str(results))
+
+    if (len(results) == 0):
+        return None
+
+    (domain, ip) = results[0]
+    return ip
 
 class BasicResolver:
      def resolve(self,request,handler):
@@ -36,7 +83,7 @@ server.start_thread()
 # Testing
 if TEST:
 	print("Testing connection...")
-	q = DNSRecord.question("google.com")
+	q = DNSRecord.question("www.bank.com")
 	print("Sending request to server...\n")
 	a = q.send("127.0.0.2", 53)
 	print("\n\nParsing reply from server...\n")
