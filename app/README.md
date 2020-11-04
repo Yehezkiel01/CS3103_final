@@ -6,6 +6,10 @@ Using **Python 3.7.9** (python 3 should work fine in general):
 2. Run ```pip install -r requirements.txt```
 3. Run ```python app.py``` to start the local development server
 
+# Accessing the SQLite database
+1. Simply run `sqlite3 database/dns.db` from `CS3103_FINAL/app`
+2. To quit, simply type `.quit`
+
 # Installing MySQL Server
 
 Linux Guide: https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04
@@ -27,6 +31,6 @@ Note: Only tested on linux machine, will be tested from GNS3 soon
 
 ## Project Structure
 
-`Python` code should be contained inside `app.py`. If the project gets large enough, we can have multiple `.py` files. 
+`Python` code should be contained inside `app.py`. If the project gets large enough, we can have multiple `.py` files.
 
 `HTML` pages must be in `/templates`.
