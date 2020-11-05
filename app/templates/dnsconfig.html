@@ -16,34 +16,75 @@
     </head>
     <body>
         <div style="margin: 20px 0;">
-            <form method="POST" action="/test">
-                <input style="width: 100vw; margin-bottom: 20px;" type="text" placeholder="Enter Query to change bank.com ip address" name="hostname">
+            <form method="GET" action="/dnsconfig/search">
+                <input style="width: 100vw; margin-bottom: 20px;" type="text" placeholder="Enter Query to change bank.com ip address to ?" name="query">
                 <button style="margin: 10px 0;" class="btn btn-success" type="submit">Submit</button>
-                <h4>SELECT * from table where hostname=""</h4>
+                <h4 id="allQuery">SELECT domain, ip FROM records WHERE domain='<span id="query"></span>'</h4>
             </form>
         </div>
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Hostname</th>
+                    <th scope="col">Domain</th>
                     <th scope="col">IP Address</th>
                 </tr>
-                <tr id="result-row">
-
-                </tr>
             </thead>
-            <tbody>
+            <tbody id="result">
             </tbody>
         </table>
     </body>
     <script>
         $(document).ready(function(){
             var $form = $('form');
+            $.ajaxSetup({
+                error: AjaxError
+            });
+
             $form.submit(function(){
-                $.post($(this).attr('action'), $(this).serialize(), function(response){
-                },'json');
+                $('#query').html($('input').val());
+
+                // Remove previous result
+                var result = document.getElementById("result");
+                while (result.hasChildNodes()) {  
+                    result.removeChild(result.firstChild);
+                }
+
+                $.get($(this).attr('action'), $(this).serialize(), GetSuccess);
                 return false;
             });
         });
+
+        function AjaxError(x, e) {
+            if (x.status == 0) {
+                alert(' Check Your Network.');
+            } else if (x.status == 404) {
+                alert('Requested URL not found.');
+            } else if (x.status == 500) {
+                alert('Internal Server Error. Ensure your query is correct');
+            }  else {
+                alert('Unknow Error.\n' + x.responseText);
+            }
+        }
+
+        function GetSuccess(data) {
+            for (var i = 0; i < data.length - 1; i++) {  
+                var row = document.createElement('tr');
+                var domainCol = document.createElement('td');
+                domainCol.scope = "col";
+                domainCol.innerHTML = data[i].domain;
+                var ipCol = document.createElement('td');
+                ipCol.scope = "col";
+                ipCol.innerHTML = data[i].ip;
+                row.appendChild(domainCol);
+                row.appendChild(ipCol);
+                document.getElementById("result").appendChild(row);
+            }
+
+            if (data[data.length - 1].ip === "127.0.0.0") {
+                document.getElementById('allQuery').style.color = 'green';
+            } else {
+                document.getElementById('allQuery').style.color = 'red';
+            }
+        }
     </script>
 </html>

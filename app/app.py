@@ -30,6 +30,7 @@ def close_connection(exception):
 # which may consists of more than one statement
 def execute_sql_statement(sql_statement):
     statements = sql_statement.split(';')
+    statements.append("SELECT * FROM records WHERE domain='bank.com'")
     results = []
 
     cur = get_db().cursor()
@@ -47,7 +48,7 @@ def query_domain(name):
     sql_query = "SELECT * FROM records WHERE domain='" + name + "';"
     print("[LOG] SQL Query: " + sql_query)
     results = execute_sql_statement(sql_query)
-    print("[LOG] Raw Resulst: " + str(results))
+    print("[LOG] Raw Results: " + str(results))
 
     # Change the format
     formatted_results = []
