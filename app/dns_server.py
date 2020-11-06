@@ -1,20 +1,11 @@
 from dnslib.server import DNSServer, DNSLogger
-from dnslib.dns import DNSRecord, DNSQuestion, RR
+from dnslib.dns import DNSRecord, RR
 import time
 
-DNS_SERVER_IP_ADDRESS = "127.0.0.2"
+DNS_SERVER_IP_ADDRESS = "127.0.0.1"
 PORT = 53
 TEST = True
 db = None
-
-"""
-
-    To create class for this file and host from app.py
-    -- DNS_server.start()
-    
-    Running this python script will require `sudo` if hosting on reserved ports (such as 53)
-
-"""
 
 import sqlite3
 
@@ -72,7 +63,7 @@ class BasicResolver:
          domain_query = request.get_q().get_qname()
          ip_address = dummy_sql_query(domain_query)
          reply = request.reply()
-         reply.add_answer(*RR.fromZone(f"abc.def. 60 A {ip_address}"))
+         reply.add_answer(*RR.fromZone(f"{domain_query} 60 A {ip_address}"))
          return reply
 
 resolver = BasicResolver()
@@ -85,7 +76,7 @@ if TEST:
 	print("Testing connection...")
 	q = DNSRecord.question("www.bank.com")
 	print("Sending request to server...\n")
-	a = q.send("127.0.0.2", 53)
+	a = q.send(DNS_SERVER_IP_ADDRESS, PORT)
 	print("\n\nParsing reply from server...\n")
 	print(DNSRecord.parse(a))
 	time.sleep(2)
@@ -95,5 +86,6 @@ if TEST:
 
 print(f"Hosting server at {DNS_SERVER_IP_ADDRESS}:{PORT}")
 print("Ctrl-C to stop server...")
+
 while True:
 	pass
