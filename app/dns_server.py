@@ -10,7 +10,7 @@ db = None
 import sqlite3
 
 def get_database_path():
-    return './database/dns.db'
+    return "app/database/dns.db" # use the full path to the dns.db
 
 # Reference: https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
 # Get the current db or created a new connection if there is no db yet
