@@ -3,7 +3,7 @@ from dnslib.dns import DNSRecord, RR
 import time
 
 DNS_SERVER_IP_ADDRESS = "127.0.0.1"
-PORT = 53
+PORT = 5000
 TEST = True
 db = None
 
@@ -46,11 +46,12 @@ def execute_sql_statement(sql_statement):
 # Open connection with sql to query the domain
 def dummy_sql_query(domain):
     # Removing the last character, which is a dot, of the domain
-    domain_name = str(domain)[:-1]
+    domain_name = str(domain).replace("www.", "") # Remove www.
+    domain_name = domain_name[:-1]
     sql_query = "SELECT * FROM records WHERE domain='" + domain_name + "';"
     print("[LOG] SQL Query: " + sql_query)
     results = execute_sql_statement(sql_query)
-    print("[LOG] Raw Resulst: " + str(results))
+    print("[LOG] Raw Results: " + str(results))
 
     if (len(results) == 0):
         return None
