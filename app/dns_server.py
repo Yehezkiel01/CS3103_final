@@ -2,8 +2,8 @@ from dnslib.server import DNSServer, DNSLogger
 from dnslib.dns import DNSRecord, RR
 import time
 
-DNS_SERVER_IP_ADDRESS = "127.0.0.1"
-PORT = 5000
+DNS_SERVER_IP_ADDRESS = "0.0.0.0"
+PORT = 53
 TEST = True
 db = None
 
