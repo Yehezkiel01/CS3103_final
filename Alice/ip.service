@@ -1,0 +1,8 @@
+[Unit]
+Description = IP script
+
+[Service]
+ExecStart=/home/user/Documents/ip.sh
+
+[Install]
+WantedBy=multi-user.target
