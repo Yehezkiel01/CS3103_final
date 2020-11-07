@@ -3,18 +3,16 @@
     <head>
         <style></style>
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}"></link>
 
         <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
         <!-- Popper JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
 
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <!-- <script src="login.js"></script> -->
-        <script src="{{ url_for('static', filename='asdfsf.js') }}"></script>></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/asdfsf.js') }}"></script>
     </head>
     <body>
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
@@ -22,7 +20,7 @@
             <input name="username" id="username" type="text"><br><br>
             <label for="password" style="margin-right: 12px;">Password</label>
             <input name="password" id="password" type="text"><br>
-            <small id="errorMsg" style="color: red;"></small><br>
+            <span style="color: red;" id="errorMsg"></span><br><br>
             <input type="submit" value="Submit" id="submit-btn">
         </div>
     </body>

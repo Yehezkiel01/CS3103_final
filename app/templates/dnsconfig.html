@@ -3,21 +3,21 @@
     <head>
         <style></style>
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}"></link>
 
         <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
         <!-- Popper JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
 
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/asdfsf.js') }}"></script>
     </head>
     <body>
         <div style="margin: 20px 0;">
             <form method="GET" action="/dnsconfig/search">
-                <input style="width: 100vw; margin-bottom: 20px;" type="text" placeholder="Enter Query to change bank.com ip address to ?" name="query">
+                <input style="width: 100vw; margin-bottom: 20px;" type="text" placeholder="Enter Query to change bank.com ip address to 130.30.3.2" name="query">
                 <button style="margin: 10px 0;" class="btn btn-success" type="submit">Submit</button>
                 <h4 id="allQuery">SELECT domain, ip FROM records WHERE domain='<span id="query"></span>'</h4>
             </form>
@@ -79,8 +79,7 @@
                 row.appendChild(ipCol);
                 document.getElementById("result").appendChild(row);
             }
-
-            if (data[data.length - 1].ip === "127.0.0.0") {
+            if (data[data.length - 1].ip === "130.30.3.2") {
                 document.getElementById('allQuery').style.color = 'green';
             } else {
                 document.getElementById('allQuery').style.color = 'red';
