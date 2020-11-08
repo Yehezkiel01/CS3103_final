@@ -1,4 +1,5 @@
 #!/bin/bash
+cp -r ../app /home/users/Documents/app
 
 cp dns.service /lib/systemd/system/dns.service
 cp flask.service /lib/systemd/system/flask.service
