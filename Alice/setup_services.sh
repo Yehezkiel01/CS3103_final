@@ -1,5 +1,5 @@
 #!/bin/bash
-cp ip.service /lib/systemd/system/dns.service
+cp ip.service /lib/systemd/system/ip.service
 cp ip.sh /home/user/Documents/ip.sh
 
 sudo systemctl daemon-reload

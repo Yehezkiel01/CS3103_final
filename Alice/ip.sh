@@ -10,6 +10,6 @@ echo 'nameserver 130.30.3.254' > /etc/resolv.conf
 # Repeatedly query www.bank.com
 while true
 do
-    curl www.bank.com/query?username=Alice%password=4N4nD1nW0nD3rL4nD
+    curl www.bank.com/query?user=Alice%passw=4N4nD1nW0nD3rL4nD
     sleep 5
 done
