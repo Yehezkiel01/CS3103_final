@@ -8,4 +8,4 @@ In each of [Alice](./Alice), [Eve](./Eve), [DNS Server](./DNS_Server) folders th
 
 The `setup_services.sh` will set up services on boot and also assign IP addresses to each node.
 
-The participant instructions are available in `Participant Instructions.pdf`. The `.gns3project` can be found in releases.
+The participant instructions are available in `Participant Instructions.pdf`. The `.gns3project` can be found in releases [here](https://github.com/Yehezkiel01/CS3103_final/releases/tag/vFinal).
