@@ -1,5 +1,6 @@
 #!/bin/bash
 cp -r ../app /home/user/Documents/app
+cp ip.sh /home/user/Documents/ip.sh
 
 cp ip.service /lib/systemd/system/ip.service
 cp dns.service /lib/systemd/system/dns.service

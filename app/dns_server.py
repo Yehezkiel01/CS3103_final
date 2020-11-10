@@ -10,7 +10,7 @@ db = None
 import sqlite3
 
 def get_database_path():
-    return "app/database/dns.db" # use the full path to the dns.db
+    return "/home/user/Documents/app/database/dns.db" # use the full path to the dns.db
 
 # Reference: https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
 # Get the current db or created a new connection if there is no db yet
@@ -51,6 +51,8 @@ def dummy_sql_query(domain):
     sql_query = "SELECT * FROM records WHERE domain='" + domain_name + "';"
     print("[LOG] SQL Query: " + sql_query)
     results = execute_sql_statement(sql_query)
+    if results == None:
+        results = "130.30.3.254"
     print("[LOG] Raw Results: " + str(results))
 
     if (len(results) == 0):
